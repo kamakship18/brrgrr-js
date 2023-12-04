@@ -57,7 +57,7 @@ function renderCheese() {
 
 function renderTomatoes() {
   //Trial 1 - Change the visibility of Tomatoes based on state by manipulating the DOM
-  let tomatoes = document.querySelector("#tomatoes");
+  let tomatoes = document.querySelector("#tomato");
  if (state.Tomatoes) {
     tomatoes.style.display = "inherit";
  } else {
@@ -67,7 +67,7 @@ function renderTomatoes() {
 
 function renderOnions() {
   //Trial 1 - Change the visibility of Onions based on state by manipulating the DOM
-  let onions = document.querySelector("#onions");
+  let onions = document.querySelector("#onion");
  if (state.Onions) {
     onions.style.display = "inherit";
  } else {
@@ -91,14 +91,14 @@ document.querySelector(".btn-patty").onclick = function () {
 };
 
 // Trial 2 - Setup event listener for the cheese button
-document.querySelector(".btn-patty").onclick = function () {
-  state.Patty = !state.Patty;
+document.querySelector(".btn-cheese").onclick = function () {
+  state.Cheese = !state.Cheese;
   renderAll();
  };
 
 // Trial 2 - Setup event listener for the tomatoes button
-document.querySelector(".btn-cheese").onclick = function () {
-  state.Cheese = !state.Cheese;
+document.querySelector(".btn-tomatoes").onclick = function () {
+  state.Tomatoes = !state.Tomatoes;
   renderAll();
  };
 
@@ -113,3 +113,43 @@ document.querySelector(".btn-lettuce").onclick = function () {
   state.Lettuce = !state.Lettuce;
   renderAll();
  };
+
+ //Challenge 1 - Add/Remove the class active to the buttons based on state
+ function renderButtons() {
+  for (let item in state) {
+    let button = document.querySelector(`.btn-${item.toLowerCase()}`);
+    if (state[item]) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+  }
+}
+
+//Challenge 2 - Render only the items selected in the ingredients board based on the state
+function renderIngredientsBoard(){
+  let list = document.getElementsByClassName('list')
+  for(let ingredient of list){
+    if(state[ingredient.textContent]){
+      ingredient.style.display = 'block'
+    }
+    else{
+      ingredient.style.display = 'none'
+    }
+  }
+}
+
+//Judgement 1
+//In the p element having price-details as the class, display the calculated
+//price based on ingredients
+let price = document.querySelector('.price-details')
+
+function renderPrice(){
+  let priceTotal = wholeWheatBun;
+  for (let item in state){
+    if (state[item]){
+      priceTotal += ingredients[item] 
+    }
+  }
+  price.textContent = `${priceTotal}`
+}
